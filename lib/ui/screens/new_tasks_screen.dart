@@ -30,11 +30,7 @@ class _NewTasksScreenState extends State<NewTasksScreen> {
   TaskModel newTaskModel = TaskModel();
   TaskStatusCountModel taskStatusCountModel = TaskStatusCountModel();
 
-  // TaskModel completedTaskModel = TaskModel();
-  // int? sum;
-  // int? completedSum;
-  // int? cancelledSum;
-  // int? progressSum;
+
   int? newTaskCount;
   int? completedTaskCount;
   int? cancelledTaskCount;
@@ -78,58 +74,6 @@ class _NewTasksScreenState extends State<NewTasksScreen> {
     }
   }
 
-      // Tried and failed
-  // Future<int?> getTaskCount() async {
-  //   final response = await NetworkUtils.getMethod(Urls.getTaskStatusCountUrl);
-  //
-  //   if (response != null && response['status'] == 'success') {
-  //     // make a model class for task status count data.
-  //     taskStatusCountModel = TaskStatusCountModel.fromJson(response);
-  //     log(taskStatusCountModel.data.toString());
-  //     // newTaskCount =  taskStatusCountModel.data?[0].sum ?? 0;
-  //     // completedTaskCount = taskStatusCountModel.data?[1].sum ?? 0;
-  //     // completedTaskCount =  taskStatusCountModel.data?[1].sId as int?;
-  //     // final data = response['data'];
-  //     //
-  //     // Map<String, int> sumMap = {};
-  //     //
-  //     // for (var item in data) {
-  //     //   String id = item['_id'];
-  //     //   int sum = item['sum'];
-  //     //   sumMap[id] = sum;
-  //     // }
-  //     //
-  //     // // return sumMap;
-  //     //
-  //     // // sum  =
-  //     //
-  //     // if (sumMap["_id"] == "Completed") {
-  //     //   setState(() {
-  //     //     completedSum = sumMap["sum"];
-  //     //   });
-  //     // } else if (sumMap['_id'] == 'Cancelled') {
-  //     //   cancelledSum = sumMap['sum'];
-  //     //   setState(() {});
-  //     // } else if (sumMap['_id'] == 'Progress') {
-  //     //   progressSum = sumMap['sum'];
-  //     //   setState(() {});
-  //     // }
-  //     // return null;
-  //
-  //     // return sum;}
-  //     //
-  //     //   sum = getSum();
-  //     //   // if (response['data']['id'] == 'Cancelled') {
-  //     //   //   return sum = response['data']['sum'];
-  //     //   // }
-  //     // }
-  //     // return 0;
-  //   } else {
-  //     if (mounted) {
-  //       showSnackBarMessage(context, 'could not update task count', true);
-  //     }
-  //   }
-  // }
 
   Future<void> getAllNewTask() async {
     _inProgress = true;

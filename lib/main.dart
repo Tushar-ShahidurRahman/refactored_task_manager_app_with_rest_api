@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:refactored_task_manager_app_with_rest_api/ui/getx_controllers/auth_controller.dart';
 import 'package:refactored_task_manager_app_with_rest_api/ui/screens/login_screen.dart';
 
 import 'ui/screens/splash_screen.dart';
@@ -18,10 +20,19 @@ class TaskManagerApp extends StatefulWidget {
 class _TaskManagerAppState extends State<TaskManagerApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       navigatorKey: TaskManagerApp.navigatorGlobalKey,
+      initialBinding: StoreBindings(),
       home: const SplashScreen(),
     );
   }
+}
+
+class StoreBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.put(AuthController());
+  }
+
 }

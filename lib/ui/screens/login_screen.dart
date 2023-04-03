@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:task_manager_rest_api/data/auth_utils.dart';
-import 'package:refactored_task_manager_app_with_rest_api/data/auth_utils.dart';
-import 'package:refactored_task_manager_app_with_rest_api/data/network_utils.dart';
+import 'package:refactored_task_manager_app_with_rest_api/ui/getx_controllers/auth_controller.dart';
 import 'package:refactored_task_manager_app_with_rest_api/ui/screens/main_bottom_nav_bar.dart';
 import 'package:refactored_task_manager_app_with_rest_api/ui/screens/signUp_screen.dart';
 import 'package:refactored_task_manager_app_with_rest_api/ui/screens/verify_with_email_screen.dart';
@@ -14,61 +12,18 @@ import '../widgets/app_elevated_button.dart';
 import '../widgets/app_text_button.dart';
 import '../widgets/app_text_field_widget.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+// import '../getx_controllers/auth_controller.dart';
+import 'package:get/get.dart';
 
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
+class LoginScreen extends StatelessWidget {
+  LoginScreen({Key? key}) : super(key: key);
 
-class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailETController = TextEditingController();
+
   final TextEditingController _passwordETController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  bool _inProgress = false;
-
-  Future<void> login() async {
-    _inProgress = true;
-    setState(() {});
-    final result = await NetworkUtils.postMethod(
-      Urls.loginUrl,
-      body: {
-        'email': _emailETController.text.trim(),
-        'password': _passwordETController.text,
-      },
-      onUnAuthorized: () {
-        showSnackBarMessage(
-            context, 'User name or password is incorrect', true);
-      },
-    );
-    _inProgress = false;
-    setState(() {});
-
-    if (result != null && result['status'] == 'success') {
-      //from the inside of that login method call AuthUtils.saveUser method.
-      AuthUtils.saveUserData(
-        userEmail: result['data']['email'],
-        userFirstName: result['data']['firstName'],
-        userLastName: result['data']['lastName'],
-        userProfilePic: result['data']['photo'],
-        userMobile: result['data']['mobile'],
-        userToken: result['token'],
-      );
-
-      // _emailETController.clear();
-      // _passwordETController.clear();
-      if (mounted) {
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const MainBottomNavBar(),
-            ),
-            (route) => false);
-      }
-    }
-  }
+  // final AuthController authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -114,19 +69,34 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
                   const SizedBox(height: 12),
-                  if (_inProgress)
-                    const Center(
-                        child: CircularProgressIndicator(color: Colors.green))
-                  else
-                    AppElevatedButton(
-                      onTap: () async {
-                        if (_formKey.currentState!.validate()) {
-                          //call the log in method from here.
-                          login();
-                        }
-                      },
-                      child: const Icon(Icons.arrow_circle_right_rounded),
-                    ),
+                  GetBuilder<AuthController>(
+                    builder: (authController) {
+                      if (authController.loginInProgress) {
+                        return const Center(
+                            child:
+                                CircularProgressIndicator(color: Colors.green));
+                      }
+                      return AppElevatedButton(
+                        onTap: () async {
+                          if (_formKey.currentState!.validate()) {
+                            //call the log in method from here.
+                            final result = await authController.login(
+                              _emailETController.text.trim(),
+                              _passwordETController.text,
+                            );
+                            if (result) {
+                              Get.offAll(() => const MainBottomNavBar());
+                            } else {
+                              Get.showSnackbar(const GetSnackBar(
+                                title: 'Log in failed. Try again',
+                              ));
+                            }
+                          }
+                        },
+                        child: const Icon(Icons.arrow_circle_right_rounded),
+                      );
+                    },
+                  ),
                   const SizedBox(height: 30),
                   Center(
                     child: TextButton(
@@ -136,12 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         ),
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const VerifyWithEmailScreen(),
-                              ));
+                          Get.to(const VerifyWithEmailScreen());
                         },
                         child: const Text(
                           'Forgot password?',
@@ -154,11 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       const Text("Don't have an account?"),
                       AppTextButton(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const SignUpScreen(),
-                              ));
+                          Get.to(const SignUpScreen());
                         },
                         child: const Text(
                           'Sign Up',

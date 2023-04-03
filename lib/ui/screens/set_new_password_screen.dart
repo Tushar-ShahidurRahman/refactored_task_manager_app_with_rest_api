@@ -90,7 +90,7 @@ class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> {
                             Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const LoginScreen(),
+                                  builder: (context) => LoginScreen(),
                                 ),
                                 (route) => false);
                           }
@@ -118,7 +118,7 @@ class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> {
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const LoginScreen(),
+                                builder: (context) =>  LoginScreen(),
                               ),
                               (route) => false);
                         }),

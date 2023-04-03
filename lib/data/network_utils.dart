@@ -74,10 +74,12 @@ class NetworkUtils {
 
   static void moveToLogin() async {
     await AuthUtils.clearAuthData();
+
+
     Navigator.pushAndRemoveUntil(
         TaskManagerApp.navigatorGlobalKey.currentContext!,
         MaterialPageRoute(
-          builder: (context) => const LoginScreen(),
+          builder: (context) => LoginScreen(),
         ),
         (route) => false);
   }

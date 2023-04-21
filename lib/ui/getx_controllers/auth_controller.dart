@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:refactored_task_manager_app_with_rest_api/ui/screens/main_bottom_nav_bar.dart';
+import 'package:refactored_task_manager_app_with_rest_api/ui/screens/home_screen.dart';
 
 import '../../data/auth_utils.dart';
 import '../../data/network_utils.dart';

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:refactored_task_manager_app_with_rest_api/ui/screens/add_new_task_screen.dart';
 import 'package:refactored_task_manager_app_with_rest_api/ui/screens/cancelled_tasks_screen.dart';
 import 'package:refactored_task_manager_app_with_rest_api/ui/screens/completed_tasks_screen.dart';
@@ -7,14 +8,15 @@ import 'package:refactored_task_manager_app_with_rest_api/ui/screens/new_tasks_s
 
 import '../widgets/user_profile_tile_widget.dart';
 
-class MainBottomNavBar extends StatefulWidget {
-  const MainBottomNavBar({Key? key}) : super(key: key);
+//This class was previously called MainBottomNavBar. Now it's Home screen.
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<MainBottomNavBar> createState() => _MainBottomNavBarState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _MainBottomNavBarState extends State<MainBottomNavBar> {
+class _HomeScreenState extends State<HomeScreen> {
   int _selectedScreen = 0;
   final List<Widget> _screens = const [
     NewTasksScreen(),
@@ -39,11 +41,12 @@ class _MainBottomNavBarState extends State<MainBottomNavBar> {
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const AddNewTaskScreen(),
-                ));
+            Get.to(() => const AddNewTaskScreen());
+            // Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //       builder: (context) => const AddNewTaskScreen(),
+            //     ));
           },
           backgroundColor: Colors.green,
           child: const Icon(
@@ -57,6 +60,7 @@ class _MainBottomNavBarState extends State<MainBottomNavBar> {
         elevation: 4,
         onTap: (index) {
           _selectedScreen = index;
+          // Update();
           setState(() {});
         },
         items: const [

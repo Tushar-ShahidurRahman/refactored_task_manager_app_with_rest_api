@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:refactored_task_manager_app_with_rest_api/ui/getx_controllers/auth_controller.dart';
-import 'package:refactored_task_manager_app_with_rest_api/ui/screens/main_bottom_nav_bar.dart';
+import 'package:refactored_task_manager_app_with_rest_api/ui/screens/home_screen.dart';
 import 'package:refactored_task_manager_app_with_rest_api/ui/screens/signUp_screen.dart';
 import 'package:refactored_task_manager_app_with_rest_api/ui/screens/verify_with_email_screen.dart';
 import 'package:refactored_task_manager_app_with_rest_api/ui/utils/snackbar_message.dart';
@@ -85,7 +85,7 @@ class LoginScreen extends StatelessWidget {
                               _passwordETController.text,
                             );
                             if (result) {
-                              Get.offAll(() => const MainBottomNavBar());
+                              Get.offAll(() => const HomeScreen());
                             } else {
                               Get.showSnackbar(const GetSnackBar(
                                 title: 'Log in failed. Try again',

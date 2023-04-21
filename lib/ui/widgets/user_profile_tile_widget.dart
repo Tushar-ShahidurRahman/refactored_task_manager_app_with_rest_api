@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:refactored_task_manager_app_with_rest_api/data/auth_utils.dart';
 import 'package:refactored_task_manager_app_with_rest_api/ui/screens/login_screen.dart';
 import 'package:refactored_task_manager_app_with_rest_api/ui/screens/update_profile_screen.dart';
@@ -12,11 +13,12 @@ class UserProfileTileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const UpdateProfileScreen(),
-            ));
+        Get.to(()=> const UpdateProfileScreen());
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //       builder: (context) => const UpdateProfileScreen(),
+        //     ));
       },
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
@@ -39,12 +41,13 @@ class UserProfileTileWidget extends StatelessWidget {
         trailing: IconButton(
           onPressed: () async {
             await AuthUtils.clearAuthData();
-            Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => LoginScreen(),
-                ),
-                (route) => false);
+            Get.offAll(() => LoginScreen());
+            // Navigator.pushAndRemoveUntil(
+            //     context,
+            //     MaterialPageRoute(
+            //       builder: (context) => LoginScreen(),
+            //     ),
+            //     (route) => false);
           },
           icon: const Icon(Icons.logout),
           color: Colors.white,
